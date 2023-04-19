@@ -1,0 +1,191 @@
+//How to create Route Class Define here everything.
+Routes Method on generate with dynmically.
+
+
+
+import 'package:flutter/material.dart';
+import 'package:flutter_routes/home_screen.dart';
+
+import 'package:flutter_routes/screen_one.dart';
+import 'package:flutter_routes/screen_two.dart';
+import 'package:flutter_routes/utills/routes_name.dart';
+
+class Routes{
+static Route<dynamic> generateRoute(RouteSettings settings){
+  switch (settings.name){
+  case RouteName.homeScreen:
+  return MaterialPageRoute(builder: (context) => HomeScreen(),);
+  case RouteName.screenOne:
+  return MaterialPageRoute(builder: (context) => ScreenOne(data: settings.arguments as Map),);
+  case RouteName.screenTwo:
+  return MaterialPageRoute(builder: (context) => ScreenTwo(data: settings.arguments as Map,),);
+  default :return MaterialPageRoute(builder: (context) {
+    
+    return Scaffold(body: Text('Error 404 ! Not Found'),);
+  },);
+  }
+}
+}
+//As many classes as we make, make a class of them,
+//on which we have to intel the sub-classes which have been written.
+class RouteName{
+static const String homeScreen='home_screeen'; // class one
+static const String screenOne='screen_one';    // class two
+static const String screenTwo= 'screen_two';   // class three
+}
+
+
+here is home screen is a class and initialize him on the name
+class HomeScreen{}
+and initialize every screen in the following method.
+static const String homeScreen='home_screeen';
+
+// Here is home screen data
+import 'package:flutter/material.dart';
+
+
+
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('Model Classes')),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+         
+  InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, RouteName.screenOne,
+                  arguments: {'Name': 'Muhammad Shahzad', 'RollNo': '1148'});
+            },
+            child: Container(
+              color: Colors.green,
+              height: 50,
+              width: double.infinity,
+              child: Builder(builder: (context) {
+                return Center(child: Text('Next Screen'));
+              }),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
+  // InkWell(
+          //   onTap: () {
+          //     Navigator.pushNamed(context, RouteName.screenOne,
+          //         arguments: {'Name': 'Muhammad Shahzad', 'RollNo': '1148'});
+          //   },
+          //   child: Container(
+          //     color: Colors.green,
+          //     height: 50,
+          //     width: double.infinity,
+          //     child: Builder(builder: (context) {
+          //       return Center(child: Text('Next Screen'));
+          //     }),
+          //   ),
+          // )
+
+
+
+//Here is create Class One.dart
+
+// ignore_for_file: must_be_immutable
+
+import 'package:flutter/material.dart';
+
+import 'package:flutter_routes/utills/routes_name.dart';
+
+class ScreenOne extends StatefulWidget {
+  dynamic data;
+  //Model model = Model();
+  ScreenOne({super.key, required this.data});
+
+  @override
+  State<ScreenOne> createState() => _ScreenOneState();
+}
+
+class _ScreenOneState extends State<ScreenOne> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.data['Name'])),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, RouteName.screenTwo, arguments: {
+                  'Cas': 'Center For Advance Solution',
+                  'Flutter': 'Good For Apps'
+
+              });
+            },
+            child: Container(
+              color: Colors.green,
+              height: 50,
+              width: double.infinity,
+              child: Builder(builder: (context) {
+                return Center(child: Text('Move to Screen two'));
+              }),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+// Here is class two.dart
+// ignore_for_file: must_be_immutable
+
+import 'package:flutter/material.dart';
+
+
+
+class ScreenTwo extends StatefulWidget {
+  dynamic data;
+   ScreenTwo({super.key,required this.data});
+
+  @override
+  State<ScreenTwo> createState() => _ScreenTwoState();
+}
+
+class _ScreenTwoState extends State<ScreenTwo> {
+  @override
+  Widget build(BuildContext context) {
+     
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.data['Cas'])),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            color: Colors.green,
+            height: 50,
+            width: double.infinity,
+            child: Builder(builder: (context) {
+              return Center(child: Text('Stays on Screen two'));
+            }),
+          )
+        ],
+      ),
+    );
+  }
+}
